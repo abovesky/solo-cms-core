@@ -7,7 +7,7 @@ use think\Model;
 use think\Db;
 use think\Exception;
 
-class Group extends Model
+class AdminGroup extends Model
 {
     /**
      * @param $id
@@ -103,7 +103,7 @@ class Group extends Model
      */
     public function auth()
     {
-        return $this -> hasMany('Auth','group_id','id');
+        return $this->hasMany('AdminAuth', 'group_id', 'id');
     }
 
 }

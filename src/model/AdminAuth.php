@@ -4,7 +4,7 @@ namespace SoloCms\model;
 
 use think\Model;
 
-class Auth extends Model
+class AdminAuth extends Model
 {
     protected $hidden = ['id'];
 

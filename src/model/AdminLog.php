@@ -5,9 +5,9 @@ namespace SoloCms\model;
 use SoloCms\exception\logger\LoggerException;
 use think\Model;
 
-class Log extends Model
+class AdminLog extends Model
 {
-    protected $createTime = 'time';
+    protected $createTime = 'create_time';
     protected $updateTime = false;
     protected $autoWriteTimestamp = 'datetime';
 
@@ -27,13 +27,13 @@ class Log extends Model
         }
 
         if (isset($params['start']) && isset($params['end'])) {
-            $filter['time'] = [$params['start'], $params['end']];
+            $filter['create_time'] = [$params['start'], $params['end']];
         }
 
         list($start, $count) = paginate();
 
-        $logs = self::withSearch(['user_name', 'time'], $filter)
-            ->order('time desc');
+        $logs = self::withSearch(['user_name', 'create_time'], $filter)
+            ->order('create_time desc');
 
         $totalNums = $logs->count();
         $logs = $logs->limit($start, $count)->select();
@@ -58,7 +58,7 @@ class Log extends Model
     public function searchTimeAttr($query, $value, $data)
     {
         if (!empty($value)) {
-            $query->whereBetweenTime('time', $value[0], $value[1]);
+            $query->whereBetweenTime('create_time', $value[0], $value[1]);
         }
     }
 }

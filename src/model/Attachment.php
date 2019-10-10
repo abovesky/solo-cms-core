@@ -5,7 +5,7 @@ namespace SoloCms\model;
 use think\Model;
 use think\model\concern\SoftDelete;
 
-class File extends Model
+class Attachment extends Model
 {
     use SoftDelete;
     protected $autoWriteTimestamp = 'datetime';

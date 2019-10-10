@@ -8,7 +8,7 @@ use think\Model;
 use think\Exception;
 use think\model\concern\SoftDelete;
 
-class User extends Model
+class Admin extends Model
 {
     use SoftDelete;
 
@@ -65,7 +65,7 @@ class User extends Model
         $userList = $userList->limit($start, $count)->select();
 
         $userList = array_map(function ($item) {
-            $group = Group::get($item['group_id']);
+            $group = AdminGroup::get($item['group_id']);
             $item['group_name'] = $group['name'];
             return $item;
         }, $userList->toArray());
@@ -84,7 +84,7 @@ class User extends Model
      */
     public static function resetPassword($params)
     {
-        $user = User::find($params['uid']);
+        $user = self::find($params['uid']);
         if (!$user) {
             throw new UserException();
         }
@@ -99,12 +99,12 @@ class User extends Model
      */
     public static function deleteUser($uid)
     {
-        $user = User::find($uid);
+        $user = self::find($uid);
         if (!$user) {
             throw new UserException();
         }
 
-        User::destroy($uid);
+        self::destroy($uid);
     }
 
     /**
@@ -116,7 +116,7 @@ class User extends Model
      */
     public static function updateUser($params)
     {
-        $user = User::find($params['uid']);
+        $user = self::find($params['uid']);
         if (!$user) {
             throw new UserException();
         }
@@ -140,7 +140,7 @@ class User extends Model
      */
     public static function updateUserAvatar($uid, $url)
     {
-        $user = User::find($uid);
+        $user = self::find($uid);
         if (!$user) {
             throw new UserException();
         }
@@ -197,7 +197,7 @@ class User extends Model
             throw new UserException();
         }
 
-        $auths = Auth::getAuthByGroupID($user['group_id']);
+        $auths = AdminAuth::getAuthByGroupID($user['group_id']);
 
         $auths = empty($auths) ? [] : split_modules($auths);
 
